@@ -1,0 +1,68 @@
+{
+  "id": "/?source=pwa#/",
+  "scope": "/",
+  "start_url": "/?source=pwa#/",
+  "name": "TaleWeaver - Weave Your Stories",
+  "short_name": "TaleWeaver",
+  "description": "A community-driven platform for sharing and discovering captivating narratives from around the globe. Weave your own tales and explore others.",
+  "display": "standalone",
+  "background_color": "#F8F4E3",
+  "theme_color": "#4A3B31",
+  "icons": [
+    {
+      "src": "/images/icons/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icons/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icons/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add New Tale",
+      "short_name": "New Tale",
+      "description": "Create and share a new tale.",
+      "url": "/?source=pwa#/add-story",
+      "icons": [
+        { 
+          "src": "/images/icons/favicon-96x96.png", 
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshots/screenshot-desktop-1.png", 
+      "sizes": "1894x1039", 
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "TaleWeaver Desktop - Home Page"
+    },
+    {
+      "src": "/images/screenshots/screenshot-mobile-1.png",
+      "sizes": "412x915", 
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "TaleWeaver Mobile - Story List"
+    }
+  ]
+}

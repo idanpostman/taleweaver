@@ -1,0 +1,2 @@
+APP_URL=http://localhost:5173/
+MAP_SERVICE_API_KEY=C6oCy3aAIq0ECQNRl8FA

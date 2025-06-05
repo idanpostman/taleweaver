@@ -1,0 +1,470 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #fff8e7;
+  color: #3b2f2f;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.login-container,
+.register-container,
+.add-story-container {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  margin: 20px auto;
+}
+
+.login-container,
+.register-container {
+  max-width: 400px;
+  text-align: center;
+}
+
+.add-story-container {
+  max-width: 700px;
+}
+
+.login-container h2,
+.register-container h2,
+.add-story-container h2 {
+  color: #4a3b31;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #6f4e37;
+  font-size: 14px;
+}
+
+.form-group input[type='text'],
+.form-group input[type='email'],
+.form-group input[type='password'],
+.form-group textarea,
+.form-group input[type='file'] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d4b996;
+  border-radius: 5px;
+  font-size: 16px;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  color: #3b2f2f;
+}
+
+.form-group input[type='file'] {
+  padding: 8px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-group input[type='text']:focus,
+.form-group input[type='email']:focus,
+.form-group input[type='password']:focus,
+.form-group textarea:focus,
+.form-group input[type='file']:focus {
+  border-color: #4a3b31;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 59, 49, 0.2);
+}
+
+button[type='submit'],
+.camera-button,
+.capture-button,
+.close-camera-button,
+a.add-story-button,
+.delete-story-button {
+  padding: 10px 18px;
+  background-color: #6f4e37;
+  color: #fff8e7;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.5;
+}
+
+button[type='submit']:hover,
+.camera-button:hover,
+.capture-button:hover,
+.close-camera-button:hover,
+a.add-story-button:hover,
+.delete-story-button:hover {
+  background-color: #4a3b31;
+  transform: translateY(-1px);
+}
+
+button[type='submit']:disabled {
+  background-color: #a07855;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+button[type='submit'] {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.delete-story-button {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 0.9em;
+  margin-top: 10px;
+  padding: 8px 15px;
+}
+.delete-story-button:hover {
+  background-color: #c0392b;
+}
+.delete-story-button:focus {
+  outline: 2px solid #a93226;
+  outline-offset: 2px;
+}
+.delete-story-button .fas {
+  margin-right: 5px;
+}
+
+#storyPhoto {
+  display: block;
+  margin-bottom: 10px;
+}
+.camera-button {
+  width: auto;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+#cameraFeedContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#cameraFeed {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border: 1px solid #ccc;
+  display: block;
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+}
+.camera-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.capture-button,
+.close-camera-button {
+  width: auto;
+  padding: 10px 15px;
+}
+
+.register-link,
+.login-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6f4e37;
+  text-align: center;
+}
+.register-link a,
+.login-link a {
+  color: #4a3b31;
+  text-decoration: none;
+  font-weight: bold;
+}
+.register-link a:hover,
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.error-message,
+.success-message {
+  padding: 12px 15px;
+  margin-top: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.home-container,
+.my-tale-content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.my-tale-content {
+  background-color: #ffffff;
+  padding: 20px 50px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.home-title,
+.my-tale-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #4a3b31;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2em;
+}
+.my-tale-description {
+  text-align: center;
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+a.add-story-button {
+  margin-bottom: 30px;
+  width: auto;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 1.3em;
+  color: #6f4e37;
+  font-family: 'Poppins', sans-serif;
+}
+
+.story-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.story-item {
+  background-color: #fff;
+  border: 1px solid #d4b996;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+.story-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.story-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+  background-color: #f0f0f0;
+}
+
+.story-content {
+  padding: 15px 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.story-name {
+  font-size: 1.3em;
+  color: #4a3b31;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.story-description {
+  font-size: 0.95em;
+  color: #3b2f2f;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.story-createdAt,
+.story-location {
+  font-size: 0.8em;
+  color: #7f6049;
+  margin-bottom: 5px;
+  margin-top: 8px;
+}
+.story-createdAt {
+    margin-top: auto;
+    padding-top: 8px;
+}
+.story-location .fas {
+  margin-right: 5px;
+}
+
+.story-map-container,
+#addStoryMapContainer {
+  border: 1px solid #d4b996;
+  border-radius: 8px;
+  background-color: #f0efeb !important;
+  height: 300px;
+  margin-top: 15px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+::view-transition-old(root) {
+  animation: exitFade 200ms ease-out forwards;
+}
+::view-transition-new(root) {
+  animation: enterFade 200ms ease-in backwards;
+}
+@keyframes exitFade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes enterFade { from { opacity: 0; } to { opacity: 1; } }
+
+.my-tale-page-container.page-content-wrapper {
+    padding: 15px;
+}
+
+#myTaleStoryListContainer .no-stories-message {
+  padding: 40px 20px;
+  font-size: 1.1em;
+  color: #666;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+#myTaleStoryListContainer .no-stories-message a {
+  color: #c07848;
+  text-decoration: none;
+  font-weight: bold;
+}
+#myTaleStoryListContainer .no-stories-message a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .login-container,
+  .register-container,
+  .add-story-container,
+  .my-tale-content {
+    padding: 20px;
+  }
+
+  .home-title,
+  .my-tale-title {
+    font-size: 1.8em;
+  }
+
+  .story-list-container {
+    gap: 15px;
+  }
+
+  .story-image {
+    height: 180px;
+  }
+
+  .story-content {
+    padding: 12px 15px;
+  }
+
+  .story-name {
+    font-size: 1.1em;
+  }
+  .story-description {
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .my-tale-page-container.page-content-wrapper,
+  .home-container {
+    padding: 10px;
+  }
+
+  .login-container,
+  .register-container,
+  .add-story-container,
+  .my-tale-content {
+    padding: 15px;
+  }
+
+  .story-list-container {
+    grid-template-columns: 1fr;
+  }
+
+  .home-title,
+  .my-tale-title {
+    font-size: 1.6em;
+  }
+
+  button[type='submit'],
+  .camera-button,
+  .capture-button,
+  .close-camera-button,
+  a.add-story-button,
+  .delete-story-button {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
+}
