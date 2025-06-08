@@ -1,2 +1,2 @@
-APP_URL=http://localhost:5173/
+APP_URL=https://candid-kitsune-9079fb.netlify.app/#/login
 MAP_SERVICE_API_KEY=C6oCy3aAIq0ECQNRl8FA
