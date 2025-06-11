@@ -36,6 +36,17 @@ class AddStoryPresenter {
       );
     }
   }
+
+  async saveStoryLocally(storyData) {
+    try {
+      const Database = (await import('../../data/database.js')).default;
+      await Database.saveStory(storyData);
+      return { success: true };
+    } catch (error) {
+      console.error('Failed to save story locally:', error);
+      return { success: false, error: error.message };
+    }
+  }
 }
 
 export default AddStoryPresenter;

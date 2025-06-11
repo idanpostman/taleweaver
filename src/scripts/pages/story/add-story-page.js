@@ -135,7 +135,6 @@ class AddStoryPage {
       this.showError('');
       this.showSuccess('');
 
-      let apiSuccess = false;
       try {
         console.log('AddStoryPage: Attempting to send story to API...');
         const apiResponse = await ApiService.addNewStory(
@@ -146,7 +145,10 @@ class AddStoryPage {
         );
         if (apiResponse && !apiResponse.error) {
           this.showSuccess('Story posted to server successfully!');
-          apiSuccess = true;
+          this.clearForm();
+          setTimeout(() => {
+            this.navigateTo('#/');
+          }, 2000);
         } else {
           const apiErrorMessage =
             apiResponse && apiResponse.message
@@ -160,49 +162,7 @@ class AddStoryPage {
         }
       } catch (error) {
         console.error('AddStoryPage: Error sending story to API:', error);
-        this.showError(
-          `Error posting story to server: ${error.message}. Story will be saved locally.`
-        );
-      }
-
-      try {
-        console.log(
-          'AddStoryPage: Attempting to save story to local IndexedDB...'
-        );
-        const storyDataForDb = {
-          description,
-          photo: this._photoFile,
-          lat: this._selectedLat,
-          lon: this._selectedLon,
-          createdAt: new Date().toISOString(),
-          synced: apiSuccess,
-        };
-        await Database.saveStory(storyDataForDb);
-        console.log(
-          'AddStoryPage: Story saved to IndexedDB successfully with photo object.'
-        );
-        if (apiSuccess) {
-          this.showSuccess('Story posted to server and saved locally!');
-        } else {
-          this.showSuccess(
-            'Story saved locally! Will attempt to sync with server later if applicable.'
-          );
-        }
-        this.clearForm();
-      } catch (dbError) {
-        console.error(
-          'AddStoryPage: Error saving story to IndexedDB:',
-          dbError
-        );
-        if (apiSuccess) {
-          this.showError(
-            `Story posted to server, but failed to save locally: ${dbError.message}`
-          );
-        } else {
-          this.showError(
-            `Failed to post to server and also failed to save locally: ${dbError.message}`
-          );
-        }
+        this.showError(`Error posting story to server: ${error.message}`);
       } finally {
         submitButton.disabled = false;
         submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Post Tale';

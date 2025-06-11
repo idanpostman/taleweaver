@@ -2,7 +2,7 @@
 import HomePresenter from '../../presenters/home/home-presenter.js';
 import * as ApiService from '../../data/api.js';
 import L from 'leaflet';
-import Database from '../../data/database.js'; // Import Database untuk IndexedDB
+import Database from '../../data/database.js';
 
 class HomePage {
   constructor() {
@@ -56,7 +56,7 @@ class HomePage {
         console.log(
           'HomePage: API returned data. Displaying stories from API.'
         );
-        this.displayStories(storiesFromApi); // Panggil displayStories
+        this.displayStories(storiesFromApi); 
         this._storiesWithLocation = storiesFromApi.filter(
           (story) => story.lat && story.lon
         );
@@ -79,7 +79,7 @@ class HomePage {
         );
         if (localStories && localStories.length > 0) {
           console.log('HomePage: Displaying stories from IndexedDB.');
-          this.displayStories(localStories); // Panggil displayStories
+          this.displayStories(localStories);
           this._storiesWithLocation = localStories.filter(
             (story) => story.lat && story.lon
           );
@@ -177,7 +177,7 @@ class HomePage {
           console.warn('Invalid createdAt date format:', story.createdAt);
         }
       }
-      // const id = story.id; // ID tidak lagi digunakan untuk tombol delete di sini
+      const id = story.id;
 
       storyElement.innerHTML = `
         <img src="${photoUrl}" alt="Story image for ${name}" class="story-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Image+Error';">
@@ -193,16 +193,77 @@ class HomePage {
               ? `<p class="story-location"><i class="fas fa-map-marker-alt"></i> Location: ${story.lat.toFixed(4)}, ${story.lon.toFixed(4)}</p>`
               : '<p class="story-location"><i class="fas fa-map-marker-alt"></i> Location not available</p>'
           }
-          </div>
+          ${id ? `<button class="save-story-button" data-id="${id}" aria-label="Save this story locally"><i class="fas fa-bookmark"></i> Save Story</button>` : ''}
+        </div>
       `;
       this._storyListContainer.appendChild(storyElement);
     });
 
-    // EVENT LISTENER UNTUK TOMBOL DELETE JUGA DIHAPUS
+    this._storyListContainer
+      .querySelectorAll('.save-story-button')
+      .forEach((button) => {
+        button.addEventListener('click', async (event) => {
+          const storyId = event.target.closest('button').dataset.id;
+          const storyToSave = stories.find(story => story.id === storyId);
+          
+          if (storyToSave) {
+            await this._handleSaveStory(storyToSave, button);
+          }
+        });
+      });
   }
 
-  // initMap, showLoading, hideLoading, showError, navigateTo, cleanup
-  // tetap sama seperti sebelumnya.
+  async _handleSaveStory(story, buttonElement) {
+    const originalText = buttonElement.innerHTML;
+    buttonElement.disabled = true;
+    buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+      let photoBlob = null;
+      if (story.photoUrl) {
+        try {
+          const response = await fetch(story.photoUrl);
+          if (response.ok) {
+            photoBlob = await response.blob();
+          }
+        } catch (error) {
+          console.warn('Could not fetch photo for local storage:', error);
+        }
+      }
+
+      const storyDataForDb = {
+        description: story.description || story.name,
+        photo: photoBlob,
+        photoUrl: story.photoUrl,
+        name: story.name,
+        lat: story.lat,
+        lon: story.lon,
+        createdAt: story.createdAt || new Date().toISOString(),
+        synced: true,
+        originalId: story.id
+      };
+
+      await Database.saveStory(storyDataForDb);
+      
+      buttonElement.innerHTML = '<i class="fas fa-check"></i> Saved!';
+      buttonElement.classList.add('saved');
+      
+      setTimeout(() => {
+        buttonElement.innerHTML = '<i class="fas fa-bookmark-solid"></i> Saved';
+        buttonElement.disabled = true;
+      }, 2000);
+
+      console.log(`Story "${story.name}" saved successfully to local storage.`);
+    } catch (error) {
+      console.error('Failed to save story:', error);
+      buttonElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed';
+      setTimeout(() => {
+        buttonElement.innerHTML = originalText;
+        buttonElement.disabled = false;
+      }, 3000);
+    }
+  }
+
   initMap(storiesWithLocation) {
     this._storiesWithLocation = storiesWithLocation || [];
 

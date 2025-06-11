@@ -80,13 +80,27 @@ class App {
     }
   }
 
-  #updateNavigation() {
+  async #updateNavigation() {
     const isLoggedIn = !!ApiService.getToken(); 
     if (this.#navLogin) this.#navLogin.style.display = isLoggedIn ? 'none' : 'list-item';
     if (this.#navLogout) this.#navLogout.style.display = isLoggedIn ? 'list-item' : 'none';
     if (this.#navAddStory) {
         this.#navAddStory.style.display = isLoggedIn ? 'list-item' : 'none';
     }
+    
+    const myTaleNav = document.querySelector('#nav-my-tale');
+    if (myTaleNav && isLoggedIn) {
+      try {
+        const Database = (await import('../data/database.js')).default;
+        const savedStories = await Database.getAllStories();
+        const count = savedStories ? savedStories.length : 0;
+        const originalText = myTaleNav.textContent.replace(/ \(\d+\)$/, '');
+        myTaleNav.textContent = count > 0 ? `${originalText} (${count})` : originalText;
+      } catch (error) {
+        console.error('Failed to get saved stories count:', error);
+      }
+    }
+    
     const pushNotificationElement = document.getElementById('pushButton') || this.#navPush;
     if (pushNotificationElement) {
         const parentLi = pushNotificationElement.closest('li');

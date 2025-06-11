@@ -80,15 +80,18 @@ registerRoute(
   })
 );
 
+// Add route for individual story saves
 registerRoute(
-  ({ url }) => url.origin.includes('maptiler.com'),
-  new CacheFirst({
-    cacheName: 'maptiler-tiles',
+  ({ request }) => {
+    return request.url.includes('/stories/') && request.method === 'GET';
+  },
+  new NetworkFirst({
+    cacheName: 'taleweaver-individual-stories',
     plugins: [
       new CacheableResponsePlugin({ statuses: [0, 200] }),
       new ExpirationPlugin({
-        maxEntries: 500,
-        maxAgeSeconds: 30 * 24 * 60 * 60,
+        maxEntries: 50,
+        maxAgeSeconds: 7 * 24 * 60 * 60,
       }),
     ],
   })
